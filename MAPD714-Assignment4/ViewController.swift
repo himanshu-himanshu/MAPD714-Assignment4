@@ -7,13 +7,56 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    var todoList:[TodoList] = []
+    
+    let todoListTableIdentifier = "TodoListTableIdentifier"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        buildTodoList()
     }
-
+    
+    
+    func buildTodoList() -> Void {
+        todoList.append(TodoList(title: "Buy Book", dueDate: ""))
+        todoList.append(TodoList(title: "Assignment 4", dueDate: "Overdue"))
+        todoList.append(TodoList(title: "Read Novel", dueDate: "24 November, 2022"))
+        todoList.append(TodoList(title: "Buy Book", dueDate: "Completed"))
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return todoList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: todoListTableIdentifier)
+        if(cell == nil) {
+            cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: todoListTableIdentifier)
+        }
+        
+        cell?.textLabel?.text = todoList[indexPath.row].title
+        cell?.detailTextLabel?.text = todoList[indexPath.row].dueDate
+        
+        let cellFont = UIFont .systemFont(ofSize: 20, weight: UIFont.Weight.medium)
+        
+        cell?.textLabel?.font = cellFont
+        
+        if(todoList[indexPath.row].dueDate == "Completed") {
+            cell?.detailTextLabel?.textColor = UIColor.gray
+            cell?.textLabel?.textColor = UIColor.gray
+         }
+        
+        if(todoList[indexPath.row].dueDate == "Overdue") {
+            cell?.detailTextLabel?.textColor = UIColor.red
+            cell?.textLabel?.textColor = UIColor.red
+         }
+        
+        return cell!
+        
+    }
+    
 
 }
 
