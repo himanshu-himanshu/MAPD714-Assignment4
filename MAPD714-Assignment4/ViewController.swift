@@ -20,10 +20,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     func buildTodoList() -> Void {
-        todoList.append(TodoList(title: "Buy Book", dueDate: ""))
+        todoList.append(TodoList(title: "Buy Book", dueDate: " "))
         todoList.append(TodoList(title: "Assignment 4", dueDate: "Overdue"))
         todoList.append(TodoList(title: "Read Novel", dueDate: "24 November, 2022"))
-        todoList.append(TodoList(title: "Buy Book", dueDate: "Completed"))
+        todoList.append(TodoList(title: "Do Homework", dueDate: "Completed"))
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -38,6 +38,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         cell?.textLabel?.text = todoList[indexPath.row].title
         cell?.detailTextLabel?.text = todoList[indexPath.row].dueDate
+        
         
         let cellFont = UIFont .systemFont(ofSize: 20, weight: UIFont.Weight.medium)
         
@@ -55,6 +56,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         return cell!
         
+    }
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        return indexPath.row == 0 ? nil : indexPath
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(todoList[indexPath.row].title)
+        print(todoList[indexPath.row].dueDate)
+        
+        let stoaryboard = UIStoryboard(name: "Main", bundle: nil)
+        let secondController = stoaryboard.instantiateViewController(withIdentifier: "todo_detail")
+        self.present(secondController, animated: true, completion: nil);
     }
     
 

@@ -14,6 +14,8 @@
 		A33B974F29218F7600B9DB26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A33B974E29218F7600B9DB26 /* Assets.xcassets */; };
 		A33B975229218F7600B9DB26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A33B975029218F7600B9DB26 /* LaunchScreen.storyboard */; };
 		A33B975A29219A9F00B9DB26 /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33B975929219A9F00B9DB26 /* TodoList.swift */; };
+		A33B975E2921AE2000B9DB26 /* TodoDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A33B975D2921AE2000B9DB26 /* TodoDetail.storyboard */; };
+		A33B97602921B3E700B9DB26 /* TodoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33B975F2921B3E700B9DB26 /* TodoDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		A33B975129218F7600B9DB26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A33B975329218F7600B9DB26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A33B975929219A9F00B9DB26 /* TodoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
+		A33B975D2921AE2000B9DB26 /* TodoDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TodoDetail.storyboard; sourceTree = "<group>"; };
+		A33B975F2921B3E700B9DB26 /* TodoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,8 @@
 				A33B975029218F7600B9DB26 /* LaunchScreen.storyboard */,
 				A33B975329218F7600B9DB26 /* Info.plist */,
 				A33B975929219A9F00B9DB26 /* TodoList.swift */,
+				A33B975D2921AE2000B9DB26 /* TodoDetail.storyboard */,
+				A33B975F2921B3E700B9DB26 /* TodoDetailViewController.swift */,
 			);
 			path = "MAPD714-Assignment4";
 			sourceTree = "<group>";
@@ -129,6 +135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A33B975229218F7600B9DB26 /* LaunchScreen.storyboard in Resources */,
+				A33B975E2921AE2000B9DB26 /* TodoDetail.storyboard in Resources */,
 				A33B974F29218F7600B9DB26 /* Assets.xcassets in Resources */,
 				A33B974D29218F7500B9DB26 /* Main.storyboard in Resources */,
 			);
@@ -142,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A33B974A29218F7500B9DB26 /* ViewController.swift in Sources */,
+				A33B97602921B3E700B9DB26 /* TodoDetailViewController.swift in Sources */,
 				A33B974629218F7500B9DB26 /* AppDelegate.swift in Sources */,
 				A33B974829218F7500B9DB26 /* SceneDelegate.swift in Sources */,
 				A33B975A29219A9F00B9DB26 /* TodoList.swift in Sources */,
