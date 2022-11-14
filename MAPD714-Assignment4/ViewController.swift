@@ -38,25 +38,39 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         cell?.textLabel?.text = todoList[indexPath.row].title
         cell?.detailTextLabel?.text = todoList[indexPath.row].dueDate
-        
-        
+//        let image = UIImage(named: "edit")
+//        cell?.imageView?.image = image
+
         let cellFont = UIFont .systemFont(ofSize: 20, weight: UIFont.Weight.medium)
         
         cell?.textLabel?.font = cellFont
         
+        let switchView = UISwitch(frame: .zero)
+        
         if(todoList[indexPath.row].dueDate == "Completed") {
             cell?.detailTextLabel?.textColor = UIColor.gray
             cell?.textLabel?.textColor = UIColor.gray
+            switchView.setOn(true, animated: true)
          }
         
         if(todoList[indexPath.row].dueDate == "Overdue") {
             cell?.detailTextLabel?.textColor = UIColor.red
             cell?.textLabel?.textColor = UIColor.red
+            switchView.setOn(false, animated: true)
          }
+    
+        switchView.tag = indexPath.row
+        cell?.accessoryView = switchView
         
         return cell!
         
     }
+    
+    @objc func switchDidChange(sender: UISwitch) {
+        print("Anything")
+    }
+    
+    
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return indexPath.row == 0 ? nil : indexPath
     }
