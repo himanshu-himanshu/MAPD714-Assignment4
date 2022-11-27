@@ -1,9 +1,15 @@
-//
-//  ViewController.swift
-//  MAPD714-Assignment4
-//
-//  Created by Himanshu on 2022-11-13.
-//
+//  File Name: ViewController.swift
+
+//  Authors: Himanshu (301296001) & Gurminder (301294300)
+//  Subject: MAPD714 iOS Development
+//  Assignment: 5
+
+//  Task: Create the logic that powers the UI for the Todo App
+
+//  About App: We have to built Todo app using swift programming language that can store the information in some kind of database such as Firebase, SQL lite etc.
+
+//  Date modified: 27/11/2022
+
 
 import UIKit
 import FirebaseCore
@@ -11,12 +17,20 @@ import FirebaseFirestore
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    /**
+        * Variable declarations
+     */
     var todoList:[TodoList] = []
     
     let todoListTableIdentifier = "TodoListTableIdentifier"
     
+    var tomDate:String = ""
+    
     @IBOutlet weak var tableView: UITableView!
     
+    /**
+        * viewDidLoad function
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         buildTodoList()
@@ -24,17 +38,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
+    /** Firebase initialization */
     var db = Firestore.firestore()
     
+    /**
+        * Function to add todo in the table view
+     */
     @IBAction func addTodoBtn(_ sender: UIButton) {
         //1. Create the alert controller.
         let alert = UIAlertController(title: "Add Todo", message: "Enter Todo name", preferredStyle: .alert)
 
-        //2. Add the text field. You can configure it however you need.
+        //2. Add the text field
         alert.addTextField(configurationHandler: { (textField) -> Void in
             textField.text = ""
         })
-
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.destructive, handler: { [self] (action) -> Void in
+            self.dismiss(animated: true, completion: nil)
+            
+        }))
+        
         //3. Grab the value from the text field, and print it when the user clicks OK.
         alert.addAction(UIAlertAction(title: "Add To List", style: .default, handler: { [self, weak alert] (action) -> Void in
             let textField = (alert?.textFields![0])! as UITextField
@@ -43,14 +66,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
             addTodo(title: textField.text!)
             print("Text field: \(String(describing: textField.text))")
-            
+
             // Firebase Code
             var ref: DocumentReference? = nil
             ref = db.collection("todos").addDocument(data: [
                 "name": textField.text!,
                 "isCompleted": false,
                 "notes": "",
-                "hasDueDate": true,
+                "hasDueDate": false,
                 "dueDate": " "
             ]) { err in
                 if let err = err {
@@ -66,25 +89,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         // 4. Present the alert.
         self.present(alert, animated: true, completion: nil)
-        
     }
     
+    /**
+        * Function to build the table view and insert todos
+     */
     func buildTodoList() -> Void {
         
         let ref = db.collection("todos")
-        //let id = ref.collectionID
         
         ref.getDocuments() { [self] (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
                 todoList = []
+                
                 for document in querySnapshot!.documents {
-//                    print("\(document.documentID) => \(String(describing: document.data()["name"]))")
-//                    print("\(document.documentID) => \(String(describing: document.data()["isCompleted"]))")
-//                    print("\(document.documentID) => \(String(describing: document.data()["notes"]))")
-//                    print("\(document.documentID) => \(String(describing: document.data()["hasDueDate"]))")
-//                    print("\(document.documentID) => \(String(describing: document.data()["dueDate"]))")
+
                     todoList.append(TodoList(
                         id:document.documentID,
                         name: document.data()["name"] as! String,
@@ -92,7 +113,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         isCompleted:(((document.data()["isCompleted"])) as! Bool),
                         notes: document.data()["notes"] as! String,
                         hasDueDate: (document.data()["hasDueDate"] as! Bool)))
-                    //print(document.documentID)
                 }
                
                 tableView.reloadData()
@@ -100,11 +120,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
+    /**
+        * Function to add todo in the table view
+     */
     func addTodo(title:String) -> Void {
         buildTodoList()
         tableView.reloadData()
     }
     
+    /** TableView Code below */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todoList.count
     }
@@ -114,13 +138,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if(cell == nil) {
             cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: todoListTableIdentifier)
         }
-//        let dateFormatter = DateFormatter()
-//
-//        // Set Date Format
-//        dateFormatter.dateFormat = "YY/MM/dd"
-//
-//        // Convert Date to String
-//        dateFormatter.string(from: todoList[indexPath.row].dueDate)
+        
+        let dateFormatter = DateFormatter()
+
+        // Set Date Format
+        dateFormatter.dateFormat = "YY/MM/dd"
+
+        // Convert Date to String
+        //dateFormatter.string(from: todoList[indexPath.row].dueDate)
         
         cell?.textLabel?.text = todoList[indexPath.row].name
         cell?.detailTextLabel?.text = todoList[indexPath.row].dueDate
@@ -157,6 +182,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
+    /**
+        * Function for isComplete Switch change
+     */
     @objc func switchDidChange(_ sender : UISwitch!) {
         let todoId = todoList[sender.tag].id
         db.collection("todos").document(todoId).setData([ "isCompleted": sender.isOn], merge: true)
