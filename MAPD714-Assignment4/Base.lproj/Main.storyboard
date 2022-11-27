@@ -11,19 +11,18 @@
         <!--Item-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MAPD714_Assignment4" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="MAPD714_Assignment4" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ID-ji-MCT">
-                                <rect key="frame" x="126" y="64" width="139" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ID-ji-MCT">
+                                <rect key="frame" x="126" y="57" width="139" height="43"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Todo List">
                                         <attributes>
-                                            <color key="NSColor" red="0.13872388326400792" green="0.30207873471143415" blue="0.30784406565656564" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            <font key="NSFont" size="36" name=".SFNS-Regular"/>
+                                            <color key="NSColor" red="0.96862745289999996" green="0.96470588450000005" blue="0.96470588450000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <font key="NSFont" metaFont="system" size="36"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -31,40 +30,86 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Nf3-lA-AbY">
-                                <rect key="frame" x="0.0" y="144" width="390" height="666"/>
+                                <rect key="frame" x="0.0" y="204" width="390" height="640"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="390" id="85w-F9-gym"/>
-                                    <constraint firstAttribute="height" constant="666" id="acX-MJ-HCf"/>
+                                    <constraint firstAttribute="height" constant="640" id="acX-MJ-HCf"/>
                                 </constraints>
+                                <color key="sectionIndexBackgroundColor" red="0.0048598507420000003" green="0.096086271109999996" blue="0.57499289509999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="EEB-a6-F4d"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="M7A-PO-mWh"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ujh-78-FjE">
+                                <rect key="frame" x="326" y="136" width="48" height="40"/>
+                                <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="lXZ-WA-4pL"/>
+                                </constraints>
+                                <color key="tintColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <size key="titleShadowOffset" width="7" height="6"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="+">
+                                            <attributes>
+                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <font key="NSFont" size="22" name="Helvetica-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <color key="baseForegroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="baseBackgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="addTodoBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b7o-dt-S1k"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All Tasks 🚀" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dui-DE-Vm9">
+                                <rect key="frame" x="16" y="141" width="112" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="112" id="XIt-uY-kqc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.58081901069999997" green="0.088427625600000004" blue="0.31863921880000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2ID-ji-MCT" secondAttribute="trailing" constant="125" id="9W4-06-1ko"/>
                             <constraint firstItem="Nf3-lA-AbY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="BWB-dc-Kiz"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Nf3-lA-AbY" secondAttribute="bottom" id="QbS-fa-Pe2"/>
+                            <constraint firstItem="2ID-ji-MCT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="126" id="NL2-ki-Dkd"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Nf3-lA-AbY" secondAttribute="bottom" constant="-34" id="QbS-fa-Pe2"/>
                             <constraint firstItem="Nf3-lA-AbY" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="RXJ-jz-RFq"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Nf3-lA-AbY" secondAttribute="bottom" id="Y57-5w-Yhb"/>
+                            <constraint firstItem="Dui-DE-Vm9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Upi-Ow-LPm"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Nf3-lA-AbY" secondAttribute="bottom" constant="-34" id="Y57-5w-Yhb"/>
+                            <constraint firstItem="Ujh-78-FjE" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="bOO-nL-Jxn"/>
+                            <constraint firstItem="2ID-ji-MCT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="cbz-7K-hlf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Nf3-lA-AbY" secondAttribute="trailing" id="sZU-Ot-ems"/>
+                            <constraint firstItem="Dui-DE-Vm9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="94" id="uck-bS-DeF"/>
                             <constraint firstItem="Nf3-lA-AbY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="vPj-xc-4xg"/>
+                            <constraint firstItem="Ujh-78-FjE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="89" id="xKJ-UT-S5b"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="usQ-Od-1Ci"/>
                     <navigationItem key="navigationItem" id="Nz8-Nu-YKr"/>
+                    <connections>
+                        <outlet property="tableView" destination="Nf3-lA-AbY" id="uNk-zv-8OI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3202" y="-13"/>
+            <point key="canvasLocation" x="3201.5384615384614" y="-13.507109004739336"/>
         </scene>
         <!--Item-->
         <scene sceneID="nsh-2t-mKP">
             <objects>
-                <viewController storyboardIdentifier="todo_detail" id="8Zj-ty-3PK" customClass="TodoDetailViewController" customModule="MAPD714_Assignment4" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="todo_detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8Zj-ty-3PK" customClass="TodoDetailViewController" customModule="MAPD714_Assignment4" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rJp-9A-8xN">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -133,6 +178,9 @@
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uev-13-Oe6">
                                         <rect key="frame" x="287" y="0.0" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="hasDueDateSwitch:" destination="8Zj-ty-3PK" eventType="valueChanged" id="gfz-uS-0BQ"/>
+                                        </connections>
                                     </switch>
                                 </subviews>
                                 <constraints>
@@ -151,6 +199,9 @@
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" preferredStyle="sliding" translatesAutoresizingMaskIntoConstraints="NO" id="Qpb-C4-UvV">
                                         <rect key="frame" x="286.66666666666669" y="0.0" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="isCompletedSwitch:" destination="8Zj-ty-3PK" eventType="valueChanged" id="tD9-Ic-HYD"/>
+                                        </connections>
                                     </switch>
                                 </subviews>
                                 <constraints>
@@ -170,6 +221,9 @@
                                         <color key="tintColor" red="0.0" green="0.56904578210000001" blue="0.57461684940000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Update"/>
+                                        <connections>
+                                            <action selector="updateBtn:" destination="8Zj-ty-3PK" eventType="touchUpInside" id="mIL-4z-5st"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQk-S2-B1X">
                                         <rect key="frame" x="119" y="0.0" width="96" height="44"/>
@@ -180,6 +234,9 @@
                                         <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Cancel"/>
+                                        <connections>
+                                            <action selector="cancelBtn:" destination="8Zj-ty-3PK" eventType="touchUpInside" id="DFk-b4-guM"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EoT-XT-bA3">
                                         <rect key="frame" x="238" y="0.0" width="96" height="44"/>
@@ -190,6 +247,9 @@
                                         <color key="tintColor" red="0.87058818339999999" green="0.37254902719999999" blue="0.35294118520000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Delete"/>
+                                        <connections>
+                                            <action selector="deleteBtn:" destination="8Zj-ty-3PK" eventType="touchUpInside" id="ajO-OU-Ht4"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -208,6 +268,9 @@
                                     </label>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="GuP-gI-DGW">
                                         <rect key="frame" x="216" y="0.0" width="126" height="50"/>
+                                        <connections>
+                                            <action selector="todoDate:" destination="8Zj-ty-3PK" eventType="valueChanged" id="c4s-kq-uEe"/>
+                                        </connections>
                                     </datePicker>
                                 </subviews>
                                 <constraints>
@@ -262,6 +325,12 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="rUa-zd-JGY"/>
+                    <connections>
+                        <outlet property="hadDueDateSwitchConn" destination="Uev-13-Oe6" id="Hrh-lg-Zm7"/>
+                        <outlet property="isCompletedSwitchConn" destination="Qpb-C4-UvV" id="jwr-Gq-bmn"/>
+                        <outlet property="todoName" destination="rCW-cA-hgC" id="Vxw-jm-oP2"/>
+                        <outlet property="todoNote" destination="SC7-cB-bfg" id="Pg9-NK-PUM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WaB-1i-1V7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
