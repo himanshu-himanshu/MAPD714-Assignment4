@@ -20,7 +20,6 @@ class TodoDetailViewController: UIViewController {
     /**
         * Variable declarations
      */
-    @IBOutlet weak var dateTextField: UITextField!
     
     let datePicker = UIDatePicker()
     
@@ -34,6 +33,7 @@ class TodoDetailViewController: UIViewController {
     /**
         * Variable Connections
      */
+
     @IBOutlet weak var todoDateElement: UIDatePicker!
     @IBOutlet weak var hadDueDateSwitchConn: UISwitch!
     @IBOutlet weak var todoNote: UITextView!
@@ -49,14 +49,18 @@ class TodoDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         todoName.text = todoId
-        print(todoId)
         
         let docRef = db.collection("todos").document(todoId)
+        
+        let dateFormatter = DateFormatter()
+
+        // Set Date Format
+        dateFormatter.dateFormat = "dd/MM/YYYY"
 
         docRef.getDocument { [self] (document, error) in
             if let document = document, document.exists {
                 
-                print("Document data: \(String(describing: document.data()!["name"]))")
+                //print("Document data: \(String(describing: document.data()!["name"]))")
                 
                 // Store Todo data into varibales
                 todoFirebaseName = (document.data()!["name"] as! String)
@@ -71,13 +75,25 @@ class TodoDetailViewController: UIViewController {
                 hadDueDateSwitchConn.setOn( todoFirebaseHasDueDate, animated: true)
                 todoDateElement.isEnabled = todoFirebaseHasDueDate
                 
+                if(todoFirebaseHasDueDate) {
+                
+                    let dateString = document.data()!["dueDate"] as! String
+
+                    let date = dateFormatter.date(from: dateString)
+ 
+                    todoDateElement.date = date!
+                                        
+                } else {
+                    todoDateElement.date = Date()
+                }
+                
             } else {
                 print("Document does not exist")
             }
         }
         
     }
-    
+
     /**
         * hasDueDate Switch change function
      */
@@ -96,6 +112,10 @@ class TodoDetailViewController: UIViewController {
     
     @IBAction func isCompletedSwitch(_ sender: Any) {
         isCompletedSwitchConn.setOn(isCompletedSwitchConn.isOn, animated: true)
+    }
+    
+    @IBAction func dateSelector(_ sender: Any) {
+        print(todoDateElement.date)
     }
     
     /**
@@ -124,8 +144,6 @@ class TodoDetailViewController: UIViewController {
      */
     
     @IBAction func cancelBtn(_ sender: Any) {
-        
-        print(isCompletedSwitchConn.isOn, todoFirebaseIsCompleted)
         
         if(todoName.text != todoFirebaseName || todoNote.text != todoFirebaseNotes || isCompletedSwitchConn.isOn != todoFirebaseIsCompleted || hadDueDateSwitchConn.isOn != todoFirebaseHasDueDate ){
 
@@ -192,19 +210,22 @@ class TodoDetailViewController: UIViewController {
         dateFormatter.dateFormat = "dd/MM/YYYY"
 
         // Convert Date to String
-        dateFormatter.string(for: todoDateElement)
+        //dateFormatter.string(for: todoDateElement.date)
+        let date: String
         
         if(hadDueDateSwitchConn.isOn) {
-            dueDateString = dateFormatter.string(for: todoDateElement.date)!
+            //dueDateString = dateFormatter.string(for: todoDateElement.date)!
+            date = dateFormatter.string(for: todoDateElement.date)!
+            //dueDateString = dateFormatter.string(for: todoDateElement.date)!
         } else {
-            dueDateString = " "
+            date = " "
         }
         
         db.collection("todos").document(todoId).setData(
             ["name": todoName.text!,
              "notes": todoNote.text!,
              "hasDueDate": hadDueDateSwitchConn.isOn,
-             "dueDate": dueDateString,
+             "dueDate": date,
              "isCompleted": isCompletedSwitchConn.isOn],
             merge: true)
         

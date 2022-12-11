@@ -253,16 +253,20 @@
                                         <color key="textColor" red="0.11372549830000001" green="0.270588249" blue="0.37647059560000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="GuP-gI-DGW">
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="dky-9l-VAD">
                                         <rect key="frame" x="216" y="0.0" width="126" height="50"/>
-                                        <connections>
-                                            <action selector="todoDate:" destination="8Zj-ty-3PK" eventType="valueChanged" id="c4s-kq-uEe"/>
-                                        </connections>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="5Hq-yo-SCg"/>
+                                            <constraint firstAttribute="width" constant="126" id="5jG-Kw-j92"/>
+                                        </constraints>
                                     </datePicker>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="dky-9l-VAD" firstAttribute="top" secondItem="WRB-Hl-fPa" secondAttribute="top" id="Tz5-go-wKv"/>
+                                    <constraint firstItem="dky-9l-VAD" firstAttribute="leading" secondItem="nlH-OJ-x00" secondAttribute="trailing" constant="145" id="XD8-w3-FYH"/>
                                     <constraint firstAttribute="width" constant="342" id="ewX-lE-uFL"/>
                                     <constraint firstAttribute="height" constant="50" id="nmj-q4-kmS"/>
+                                    <constraint firstAttribute="trailing" secondItem="dky-9l-VAD" secondAttribute="trailing" id="oV3-Fj-Rxp"/>
                                 </constraints>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TUe-EO-T37">
@@ -336,7 +340,7 @@
                     <connections>
                         <outlet property="hadDueDateSwitchConn" destination="Uev-13-Oe6" id="Hrh-lg-Zm7"/>
                         <outlet property="isCompletedSwitchConn" destination="Qpb-C4-UvV" id="jwr-Gq-bmn"/>
-                        <outlet property="todoDateElement" destination="GuP-gI-DGW" id="Mll-Vq-9mS"/>
+                        <outlet property="todoDateElement" destination="dky-9l-VAD" id="rWi-fl-HfS"/>
                         <outlet property="todoName" destination="rCW-cA-hgC" id="Vxw-jm-oP2"/>
                         <outlet property="todoNote" destination="SC7-cB-bfg" id="Pg9-NK-PUM"/>
                     </connections>

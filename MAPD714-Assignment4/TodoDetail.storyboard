@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RJc-Vc-oZl">
-                                <rect key="frame" x="81.333333333333329" y="47.666666666666657" width="227.33333333333337" height="32.333333333333343"/>
+                                <rect key="frame" x="78" y="45.333333333333343" width="234" height="34.666666666666657"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Buy Laptop Details">
                                         <attributes>
@@ -153,11 +153,8 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icF-LP-JoX">
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="icF-LP-JoX">
                                         <rect key="frame" x="209" y="0.0" width="128" height="50"/>
-                                        <date key="date" timeIntervalSinceReferenceDate="690077009.85100698">
-                                            <!--2022-11-14 00:03:29 +0000-->
-                                        </date>
                                     </datePicker>
                                 </subviews>
                                 <constraints>

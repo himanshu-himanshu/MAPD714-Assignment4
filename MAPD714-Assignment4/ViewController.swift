@@ -34,8 +34,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         buildTodoList()
-        print("Hello")
-        
     }
     
     /** Firebase initialization */
@@ -65,7 +63,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 return
             }
             addTodo(title: textField.text!)
-            print("Text field: \(String(describing: textField.text))")
+            //print("Text field: \(String(describing: textField.text))")
 
             // Firebase Code
             var ref: DocumentReference? = nil
@@ -73,8 +71,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 "name": textField.text!,
                 "isCompleted": false,
                 "notes": "",
+                "dueDate": " ",
                 "hasDueDate": false,
-                "dueDate": " "
             ]) { err in
                 if let err = err {
                     print("Error adding document: \(err)")
@@ -105,7 +103,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 todoList = []
                 
                 for document in querySnapshot!.documents {
-
                     todoList.append(TodoList(
                         id:document.documentID,
                         name: document.data()["name"] as! String,
@@ -133,6 +130,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return todoList.count
     }
     
+//    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        <#code#>
+//    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let favouriteaction = UIContextualAction(style: .normal, title: "") { [weak self] (action, view, completionHandler) in
+            self!.markAsComplete(id: indexPath.row)
+              //completionHandler(true)
+           }
+           // print(indexPath.row)
+           favouriteaction.backgroundColor = .systemYellow
+        let config = UISwipeActionsConfiguration(actions: [favouriteaction])
+        config.per
+        return config
+    }
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: todoListTableIdentifier)
         if(cell == nil) {
@@ -142,41 +156,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let dateFormatter = DateFormatter()
 
         // Set Date Format
-        dateFormatter.dateFormat = "YY/MM/dd"
+        dateFormatter.dateFormat = "dd/MM/YYYY"
 
         // Convert Date to String
         //dateFormatter.string(from: todoList[indexPath.row].dueDate)
         
         cell?.textLabel?.text = todoList[indexPath.row].name
         cell?.detailTextLabel?.text = todoList[indexPath.row].dueDate
+        //cell?.detailTextLabel?.text = dateFormatter.string(from: todoList[indexPath.row].dueDate)
 
         let cellFont = UIFont .systemFont(ofSize: 20, weight: UIFont.Weight.medium)
         
         cell?.textLabel?.font = cellFont
         
-        let isCompletedSwitchView = UISwitch(frame: .zero)
+        //let isCompletedSwitchView = UISwitch(frame: .zero)
         
         if(todoList[indexPath.row].isCompleted == true) {
             cell?.detailTextLabel?.textColor = UIColor.gray
             cell?.textLabel?.textColor = UIColor.gray
-            isCompletedSwitchView.setOn(true, animated: true)
+            //isCompletedSwitchView.setOn(true, animated: true)
         } else {
             cell?.detailTextLabel?.textColor = UIColor.black
             cell?.textLabel?.textColor = UIColor.black
-            isCompletedSwitchView.setOn(false, animated: true)
+            //isCompletedSwitchView.setOn(false, animated: true)
         }
         
         if(todoList[indexPath.row].dueDate == "Overdue") {
             cell?.detailTextLabel?.textColor = UIColor.red
             cell?.textLabel?.textColor = UIColor.red
-            isCompletedSwitchView.setOn(false, animated: true)
+            //isCompletedSwitchView.setOn(false, animated: true)
          }
     
-        isCompletedSwitchView.tag = indexPath.row
+        //isCompletedSwitchView.tag = indexPath.row
   
-        isCompletedSwitchView.addTarget(self, action: #selector(self.switchDidChange(_:)) , for: .valueChanged)
+       // isCompletedSwitchView.addTarget(self, action: #selector(self.switchDidChange(_:)) , for: .valueChanged)
         
-        cell?.accessoryView = isCompletedSwitchView
+        //cell?.accessoryView = isCompletedSwitchView
         
         return cell!
         
@@ -185,11 +200,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     /**
         * Function for isComplete Switch change
      */
-    @objc func switchDidChange(_ sender : UISwitch!) {
-        let todoId = todoList[sender.tag].id
-        db.collection("todos").document(todoId).setData([ "isCompleted": sender.isOn], merge: true)
-        buildTodoList()
-    }
+//    @objc func switchDidChange(_ sender : UISwitch!) {
+//        print(sender.tag)
+//        let todoId = todoList[sender.tag].id
+//        db.collection("todos").document(todoId).setData([ "isCompleted": sender.isOn], merge: true)
+//        buildTodoList()
+//    }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return indexPath
@@ -200,6 +216,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let secondController = stoaryboard.instantiateViewController(withIdentifier: "todo_detail") as! TodoDetailViewController
         secondController.todoId = todoList[indexPath.row].id
         self.present(secondController, animated: true, completion: nil);
+    }
+    
+    func markAsComplete(id:Int) {
+        let todoId = todoList[id].id
+        let docRef = db.collection("todos").document(todoId)
+        
+        docRef.getDocument { [self] (document, error) in
+            //var todoFirebaseIsCompleted:Bool
+            if let document = document, document.exists {
+//                print(((document.data()!["isCompleted"])) as! Bool)
+                let isComp:Bool = (((document.data()!["isCompleted"])) as! Bool)
+                if(isComp == true) {
+                    db.collection("todos").document(todoId).setData([ "isCompleted": false], merge: true)
+                } else {
+                    db.collection("todos").document(todoId).setData([ "isCompleted": true], merge: true)
+                }
+                buildTodoList()
+            }
+        }
     }
 }
 
