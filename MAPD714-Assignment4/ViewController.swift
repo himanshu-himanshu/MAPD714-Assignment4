@@ -130,26 +130,43 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return todoList.count
     }
     
-//    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        <#code#>
-//    }
+    /**
+        * Swipe Action from left to right (edit todo gesture)
+     */
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let editAction = UIContextualAction(style: .normal, title: "✎") { [weak self] (action, view, completionHandler) in
+            self!.editTodoFunction(id: indexPath.row)
+              completionHandler(true)
+           }
+        editAction.backgroundColor = .systemBlue
+        let config = UISwipeActionsConfiguration(actions: [editAction])
+        config.performsFirstActionWithFullSwipe = true
+        return config
+    }
     
+    /**
+        * Swipe Action from right to left (complete todo and delete todo gestures)
+     */
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let completeAction = UIContextualAction(style: .normal, title: "") { [weak self] (action, view, completionHandler) in
+        let completeAction = UIContextualAction(style: .normal, title: "✔") { [weak self] (action, view, completionHandler) in
             self!.markAsComplete(id: indexPath.row)
               completionHandler(true)
            }
         completeAction.backgroundColor = .systemYellow
         
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, completionHandler) in
+        let deleteAction = UIContextualAction(style: .destructive, title: "🗑️") { [weak self] (action, view, completionHandler) in
             self!.deleteTodo(id: indexPath.row)
               completionHandler(true)
            }
         deleteAction.backgroundColor = .systemRed
         
-        let config = UISwipeActionsConfiguration(actions: [deleteAction, completeAction])
+        let config = UISwipeActionsConfiguration(actions: [deleteAction,completeAction])
         return config
     }
+    
+    /**
+        * Function to presenting table cell UI to the screen     
+     */
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: todoListTableIdentifier)
@@ -173,57 +190,43 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         cell?.textLabel?.font = cellFont
         
-        //let isCompletedSwitchView = UISwitch(frame: .zero)
-        
         if(todoList[indexPath.row].isCompleted == true) {
             cell?.detailTextLabel?.textColor = UIColor.gray
             cell?.textLabel?.textColor = UIColor.gray
-            //isCompletedSwitchView.setOn(true, animated: true)
         } else {
             cell?.detailTextLabel?.textColor = UIColor.black
             cell?.textLabel?.textColor = UIColor.black
-            //isCompletedSwitchView.setOn(false, animated: true)
         }
         
         if(todoList[indexPath.row].dueDate == "Overdue") {
             cell?.detailTextLabel?.textColor = UIColor.red
             cell?.textLabel?.textColor = UIColor.red
-            //isCompletedSwitchView.setOn(false, animated: true)
          }
-    
-        //isCompletedSwitchView.tag = indexPath.row
-  
-       // isCompletedSwitchView.addTarget(self, action: #selector(self.switchDidChange(_:)) , for: .valueChanged)
-        
-        //cell?.accessoryView = isCompletedSwitchView
         
         return cell!
         
     }
     
     /**
-        * Function for isComplete Switch change
+        * Function for performing edit todo functionality
+        * :param: id -> Integer to hold todo id
+        * :returns: void
      */
-//    @objc func switchDidChange(_ sender : UISwitch!) {
-//        print(sender.tag)
-//        let todoId = todoList[sender.tag].id
-//        db.collection("todos").document(todoId).setData([ "isCompleted": sender.isOn], merge: true)
-//        buildTodoList()
-//    }
-    
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return indexPath
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func editTodoFunction(id:Int) {
+        let transition = CATransition()
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromLeft
         let stoaryboard = UIStoryboard(name: "Main", bundle: nil)
         let secondController = stoaryboard.instantiateViewController(withIdentifier: "todo_detail") as! TodoDetailViewController
-        secondController.todoId = todoList[indexPath.row].id
-        self.present(secondController, animated: true, completion: nil);
+        secondController.todoId = todoList[id].id
+        self.view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(secondController, animated: false, completion: nil);
     }
     
     /**
         * Function for performing mark as completed when user swipes from right to left
+        * :param: id -> Integer to hold todo id
+        * :returns: void
      */
     func markAsComplete(id:Int) {
         let todoId = todoList[id].id
@@ -245,6 +248,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     /**
         * Function for performing delete todo when user long swipes from right to left
+        * :param: id -> Integer to hold todo id
+        * :returns: void
      */
     func deleteTodo(id:Int) {
         print("Perform Delete")

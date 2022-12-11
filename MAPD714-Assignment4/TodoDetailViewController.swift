@@ -2,13 +2,13 @@
 
 //  Authors: Himanshu (301296001) & Gurminder (301294300)
 //  Subject: MAPD714 iOS Development
-//  Assignment: 5
+//  Assignment: 6
 
-//  Task: Create the logic that powers the UI for the Todo App
+//  Task: Add Gestures to the todo app which we developed in assignment 5.
 
 //  About App: We have to built Todo app using swift programming language that can store the information in some kind of database such as Firebase, SQL lite etc.
 
-//  Date modified: 27/11/2022
+//  Date modified: 10/12/2022
 
 
 import UIKit
