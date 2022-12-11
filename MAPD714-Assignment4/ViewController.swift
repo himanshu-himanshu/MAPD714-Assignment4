@@ -2,13 +2,13 @@
 
 //  Authors: Himanshu (301296001) & Gurminder (301294300)
 //  Subject: MAPD714 iOS Development
-//  Assignment: 5
+//  Assignment: 6
 
-//  Task: Create the logic that powers the UI for the Todo App
+//  Task: Add Gestures to the todo app which we developed in assignment 5.
 
 //  About App: We have to built Todo app using swift programming language that can store the information in some kind of database such as Firebase, SQL lite etc.
 
-//  Date modified: 27/11/2022
+//  Date modified: 11/12/2022
 
 
 import UIKit
@@ -135,17 +135,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //    }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let favouriteaction = UIContextualAction(style: .normal, title: "") { [weak self] (action, view, completionHandler) in
+        let completeAction = UIContextualAction(style: .normal, title: "") { [weak self] (action, view, completionHandler) in
             self!.markAsComplete(id: indexPath.row)
-              //completionHandler(true)
+              completionHandler(true)
            }
-           // print(indexPath.row)
-           favouriteaction.backgroundColor = .systemYellow
-        let config = UISwipeActionsConfiguration(actions: [favouriteaction])
-        config.per
+        completeAction.backgroundColor = .systemYellow
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, completionHandler) in
+            self!.deleteTodo(id: indexPath.row)
+              completionHandler(true)
+           }
+        deleteAction.backgroundColor = .systemRed
+        
+        let config = UISwipeActionsConfiguration(actions: [deleteAction, completeAction])
         return config
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: todoListTableIdentifier)
@@ -218,6 +222,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.present(secondController, animated: true, completion: nil);
     }
     
+    /**
+        * Function for performing mark as completed when user swipes from right to left
+     */
     func markAsComplete(id:Int) {
         let todoId = todoList[id].id
         let docRef = db.collection("todos").document(todoId)
@@ -225,7 +232,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         docRef.getDocument { [self] (document, error) in
             //var todoFirebaseIsCompleted:Bool
             if let document = document, document.exists {
-//                print(((document.data()!["isCompleted"])) as! Bool)
                 let isComp:Bool = (((document.data()!["isCompleted"])) as! Bool)
                 if(isComp == true) {
                     db.collection("todos").document(todoId).setData([ "isCompleted": false], merge: true)
@@ -233,6 +239,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     db.collection("todos").document(todoId).setData([ "isCompleted": true], merge: true)
                 }
                 buildTodoList()
+            }
+        }
+    }
+    
+    /**
+        * Function for performing delete todo when user long swipes from right to left
+     */
+    func deleteTodo(id:Int) {
+        print("Perform Delete")
+        let todoId = todoList[id].id
+        db.collection("todos").document(todoId).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+                self.buildTodoList()
             }
         }
     }
